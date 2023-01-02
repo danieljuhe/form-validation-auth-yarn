@@ -2,8 +2,8 @@ import React from "react";
 import { useRef, useState, useEffect } from "react";
 
 
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{6,23}$/;
-const PWD_REGEX = /^(/=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$/;
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,20}$/;
 
 export const Register = () => {
 
@@ -37,11 +37,11 @@ export const Register = () => {
     }, [user])
 
     useEffect(()=>{
-        const result = PWD_REGEX(pwd)
+        const result = PWD_REGEX.test(pwd)
         console.log(result)
         console.log(pwd)
         console.log(result)
-        const match = pwd ==matchPwd
+        const match = pwd == matchPwd
         setValidMatch(match)
     }, [pwd, matchPwd])
 
@@ -58,6 +58,12 @@ export const Register = () => {
             <h1>Register Form</h1>
             <form>
                 <label htmlFor="username">Username:</label>
+                <span className={validName ? "valid" : "hide"}>
+                    OK
+                </span>
+                <span className={validName || !user ? "hide" : "invalid"}>
+                    ERROR
+                </span>
                 <input 
                     type="text" 
                     id="username" 
@@ -66,9 +72,14 @@ export const Register = () => {
                     onChange={(e) => setUser(e.target.value)}
                     required
                     aria-invalid={validName ? "false" : "true"}
-                    aria-descibedby="uidnote"
+                    aria-describedby="uidnote"
                     onFocus={() => setUserFocus(true)}
                     onBlur={() => setUserFocus(false)} />
+                <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                    4 a 23 caracteres<br/>
+                    Debe empezar con una letra.<br/>
+                    Valido letras, numeros y caracteres especiales.
+                </p>
             </form>
         </div>
     )
