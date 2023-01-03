@@ -1,5 +1,8 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
+import "./register.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -52,7 +55,6 @@ export const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // if button enabled with JS hack
         const v1 = USER_REGEX.test(user)
         const v2 = PWD_REGEX.test(pwd)
         if (!v1 || !v2) {
@@ -65,7 +67,8 @@ export const Register = () => {
 
 
     return (
-        <>
+        <div className="main">
+            <div className="register">
         {success ? (
             <section>
                 <h1>Succes!</h1>
@@ -81,13 +84,14 @@ export const Register = () => {
             <h1>Register Form</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:
-                <span className={validName ? "valid" : "hide"}>
-                    OK
-                </span>
-                <span className={validName || !user ? "hide" : "invalid"}>
-                    ERROR
-                </span>
+                    <span className={validName ? "valid" : "hide"}>
+                        <FontAwesomeIcon icon={faCheck}/>
+                    </span>
+                    <span className={validName || !user ? "hide" : "invalid"}>
+                    <FontAwesomeIcon icon={faTimes}/>
+                    </span>
                 </label>
+                <br/>
                 <input 
                     type="text" 
                     id="username" 
@@ -101,6 +105,7 @@ export const Register = () => {
                     onBlur={() => setUserFocus(false)} />
 
                 <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                    <FontAwesomeIcon icon={faCircleInfo} />
                     4 a 23 caracteres<br/>
                     Debe empezar con una letra.<br/>
                     Valido letras, numeros y guion bajo.
@@ -108,12 +113,13 @@ export const Register = () => {
 
                 <label htmlFor="password">Password:
                 <span className={validPwd ? "valid" : "hide"}>
-                    OK
+                    <FontAwesomeIcon icon={faCheck}/>
                 </span>
                 <span className={validPwd || !pwd ? "hide" : "invalid"}>
-                    ERROR
+                    <FontAwesomeIcon icon={faTimes}/>
                 </span>
                 </label>
+                <br/>
                 <input 
                     type="password"
                     id="password"
@@ -124,17 +130,19 @@ export const Register = () => {
                     onFocus={() => setPwdFocus(true)}
                     onBlur={() => setPwdFocus(false)} />
                     <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+                        <FontAwesomeIcon icon={faCircleInfo} />
                         Al menos 6 a 20 caracteres.<br/>
                         Debe de contener mayusculas, minisculas, y un numero obligatorio. <br/>
                     </p>
                 <label htmlFor="confirm_pwd">Confirm your password:
                     <span className={validMatch && matchPwd ? "valid" : "hide"}>
-                        OK
+                        <FontAwesomeIcon icon={faCheck}/>
                     </span>
                     <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
-                        ERROR
+                        <FontAwesomeIcon icon={faTimes}/>
                     </span>
                 </label>
+                <br/>
                 <input 
                     type="password"
                     id="confirm_pwd"
@@ -160,6 +168,7 @@ export const Register = () => {
             </p>
         </section>
         )}
-        </>
+        </div>
+        </div>
     )
 }
