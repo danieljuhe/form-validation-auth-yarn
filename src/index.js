@@ -5,13 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Register } from './register';
 import { AuthProvider } from './context/authprovider';
+import { Login } from './login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-    <Register />
-    </AuthProvider>
+    <Login/>
   </React.StrictMode>
 );
 
